@@ -46,6 +46,13 @@ async function run() {
       const result = await blogCollection.findOne(query);
       res.send(result);
     });
+
+    // POST A Service API
+    app.post("/services", async (req, res) => {
+      const service = req.body;
+      const result = await serviceCollection.insertOne(service);
+      res.json(result);
+    });
   } finally {
     // await client.close()
   }
