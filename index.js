@@ -60,12 +60,9 @@ async function run() {
     // GET orders by email
     app.post("/orders/byEmail", async (req, res) => {
       const email = req.body;
-      console.log("hit is", email);
       const query = { userEmail: { $in: email } };
-      console.log(query);
       const orders = await orderCollection.find(query).toArray();
       res.json(orders);
-      // res.send("adfadf");
     });
 
     // POST A Service API
