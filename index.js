@@ -26,6 +26,7 @@ async function run() {
     const database = client.db("deliveryhut");
     const serviceCollection = database.collection("services");
     const blogCollection = database.collection("blogs");
+    const orderCollection = database.collection("orders");
 
     // GET Services API
     app.get("/services", async (req, res) => {
@@ -60,6 +61,13 @@ async function run() {
     app.post("/services", async (req, res) => {
       const service = req.body;
       const result = await serviceCollection.insertOne(service);
+      res.json(result);
+    });
+
+    // POST a order API
+    app.post("/orders", async (req, res) => {
+      const order = req.body;
+      const result = await orderCollection.insertOne(order);
       res.json(result);
     });
   } finally {
