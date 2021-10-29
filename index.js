@@ -25,10 +25,17 @@ async function run() {
     await client.connect();
     const database = client.db("deliveryhut");
     const serviceCollection = database.collection("services");
+    const blogCollection = database.collection("blogs");
 
-    // GET API
+    // GET Services API
     app.get("/services", async (req, res) => {
       const cursor = serviceCollection.find({});
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+    // Get Blogs Api
+    app.get("/blogs", async (req, res) => {
+      const cursor = blogCollection.find({});
       const result = await cursor.toArray();
       res.send(result);
     });
@@ -40,7 +47,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Deliveryhut server running");
 });
 
 app.listen(port, () => {
