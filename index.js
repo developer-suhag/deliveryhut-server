@@ -39,6 +39,13 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+    // Get single blog api
+    app.get("/blogs/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await blogCollection.findOne(query);
+      res.send(result);
+    });
   } finally {
     // await client.close()
   }
