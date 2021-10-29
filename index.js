@@ -33,6 +33,15 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+
+    // GET single service api
+    app.get("/services/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await serviceCollection.findOne(query);
+      res.send(result);
+    });
+
     // Get Blogs Api
     app.get("/blogs", async (req, res) => {
       const cursor = blogCollection.find({});
