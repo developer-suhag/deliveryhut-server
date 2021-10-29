@@ -23,7 +23,15 @@ console.log(uri);
 async function run() {
   try {
     await client.connect();
-    console.log("conntected");
+    const database = client.db("deliveryhut");
+    const serviceCollection = database.collection("services");
+
+    // GET API
+    app.get("/services", async (req, res) => {
+      const cursor = serviceCollection.find({});
+      const result = await cursor.toArray();
+      res.send(result);
+    });
   } finally {
     // await client.close()
   }
