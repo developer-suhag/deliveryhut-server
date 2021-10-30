@@ -28,6 +28,7 @@ async function run() {
     const blogCollection = database.collection("blogs");
     const orderCollection = database.collection("orders");
     const teamCollection = database.collection("team_members");
+    const messageCollection = database.collection("messages");
 
     // GET Services API
     app.get("/services", async (req, res) => {
@@ -97,6 +98,13 @@ async function run() {
     app.post("/orders", async (req, res) => {
       const order = req.body;
       const result = await orderCollection.insertOne(order);
+      res.json(result);
+    });
+
+    // POST a message api
+    app.post("/message", async (req, res) => {
+      const message = req.body;
+      const result = await messageCollection.insertOne(message);
       res.json(result);
     });
 
