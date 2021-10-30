@@ -27,6 +27,7 @@ async function run() {
     const serviceCollection = database.collection("services");
     const blogCollection = database.collection("blogs");
     const orderCollection = database.collection("orders");
+    const teamCollection = database.collection("team_members");
 
     // GET Services API
     app.get("/services", async (req, res) => {
@@ -68,6 +69,12 @@ async function run() {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const result = await orderCollection.findOne(query);
+      res.send(result);
+    });
+
+    app.get("/team", async (req, res) => {
+      const cursor = teamCollection.find({});
+      const result = await cursor.toArray();
       res.send(result);
     });
 
