@@ -57,6 +57,13 @@ async function run() {
       res.send(result);
     });
 
+    // GET All Order API
+    app.get("/orders", async (req, res) => {
+      const cursor = orderCollection.find({});
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
     // GET orders by email
     app.post("/orders/byEmail", async (req, res) => {
       const email = req.body;
