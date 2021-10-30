@@ -94,7 +94,7 @@ async function run() {
     });
 
     // PUT / Update orders status api
-    app.put("orders/:id", async (req, res) => {
+    app.put("/orders/:id", async (req, res) => {
       const id = req.params.id;
       const updatedOrder = req.body;
       const filter = { _id: ObjectId(id) };
