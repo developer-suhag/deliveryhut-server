@@ -3,6 +3,7 @@ const cors = require("cors");
 const { MongoClient } = require("mongodb");
 require("dotenv").config();
 const ObjectId = require("mongodb").ObjectId;
+const fileUpload = require("express-fileupload");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -10,6 +11,7 @@ const port = process.env.PORT || 5000;
 // middleware
 app.use(cors());
 app.use(express.json());
+app.use(fileUpload());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.qow90.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
@@ -88,8 +90,30 @@ async function run() {
     });
 
     // POST A Service API
+    // app.post("/services", async (req, res) => {
+    //   const service = req.body;
+    //   const result = await serviceCollection.insertOne(service);
+    //   res.json(result);
+    // });
+
     app.post("/services", async (req, res) => {
-      const service = req.body;
+      const title = req.body.title;
+      const subTitle = req.body.subTitle;
+      const price = req.body.price;
+      const description = req.body.description;
+
+      const img = req.files.img;
+      const imgData = img.data;
+      const encodedImg = imgData.toString("base64");
+      const imageBuffer = Buffer.from(encodedImg, "base64");
+
+      const service = {
+        title,
+        subTitle,
+        price,
+        description,
+        img: imageBuffer,
+      };
       const result = await serviceCollection.insertOne(service);
       res.json(result);
     });
