@@ -89,31 +89,8 @@ async function run() {
       res.json(orders);
     });
 
-    // POST A Service API
-    // app.post("/services", async (req, res) => {
-    //   const service = req.body;
-    //   const result = await serviceCollection.insertOne(service);
-    //   res.json(result);
-    // });
-
     app.post("/services", async (req, res) => {
-      const title = req.body.title;
-      const subTitle = req.body.subTitle;
-      const price = req.body.price;
-      const description = req.body.description;
-
-      const img = req.files.img;
-      const imgData = img.data;
-      const encodedImg = imgData.toString("base64");
-      const imageBuffer = Buffer.from(encodedImg, "base64");
-
-      const service = {
-        title,
-        subTitle,
-        price,
-        description,
-        img: imageBuffer,
-      };
+      const service = req.body;
       const result = await serviceCollection.insertOne(service);
       res.json(result);
     });
